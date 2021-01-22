@@ -1,0 +1,152 @@
+//Controlador - autenticador
+protected void doGet(HttpServlet...) throws ... { //service
+	HttpSession sessao = request.getSession(false);
+			
+			/* Quando o usuário aperta sair
+			*Se a sessao existir, ela vai passar a ser invalida, e depois que ela passar a ser invalida
+			* ela será redirecionada para a página de login 
+			*/
+		if(sessao != null){
+				sessao.invalidate();
+			
+		}
+		//Colocando um botão para sair da conta |Redirecionando para página de login
+	response.sendRedirect("login.jsp");
+}
+
+protected void doPost(HttpServlet...) throws ... {
+		String semail = request.getParemeter("email");
+		String ssenha = request.getParameter("senha");
+		
+		//Criando um objeto usuário para adicionar os dados
+		Usuario usu = new Usuario();
+		usu.setEmail(semail);
+		usu.setSenha(ssenha);
+		
+			riando um objeto usuarioDAO e o autenticando
+		UsuarioDAO usuDAO = new UsuarioDAO();
+			/*
+			* Instancia novamente o usuário, para estar recebendo as informações da autenticação
+			* referente ao método da classe DAO do usuário
+			*/
+		Usuario usuAutenticado = usuDAO.autenticacao(usu);
+		
+		if(usuAutenticado != null){
+			HttpSession sessao = request.getSession();
+			Sessao.setAttribute("usuAutenticado", usuAutenticado);
+		  //sessao.setMaxInactiveInterval(3000); //Definindo tempo de sessao | opcional | 3000 - 3 min
+			
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+			
+		} else {
+			response.sendRedirect("erroLogin.jsp");
+		}	
+}
+
+//FILTRO (impede o acesso à páginas internas) | pacote controlador -> new -> filter
+
+/*
+* O filtro é uma interface, dentro dele tem várias assinaturas filtroPaginas, destroy (destruir as paginas), doFilter (que é o que será utilizado) e o init.
+*
+*/
+@webFilter("/*") // * para pegar todas as páginas para serem filtradas
+
+public void doFilter(ServletRequest request, ServletResponse...) throws ...{
+			//A linha debaixo é a mesma coisa que isso -> HttpSession sessao = request.getSession();
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+			//A string url pega a url de todas as pgs
+		String url = httpServletRequest.getRequestURI();
+			//Capturando a sessao
+		HttpSession sessao = httpServletRequest.getSession();
+				
+				/*
+				*Veja se o usuario está logado ou não
+				*sessao.getAttribute("usuAutenticado") != null => Se o usuário existe
+				*url.lastIndexOf("login.jsp") >- 1 => Se foi autenticado na hora de logar
+				*url.lastIndexOf("autenticador") >- 1 => url do autenticador
+				* Tem que passar pelas três páginas, ou uma das três
+				*/
+			if(sessao.getAttribute("usuAutenticado") != null || url.lastIndexOf("login.jsp") >- 1 || url.lastIndexOf("autenticador") >- 1){
+						/*
+						*Chain é o modo que permite o fluxo de requisição das páginas
+						*/
+					chain.doFilter(request, response);
+			} else {
+						/*
+						*Se o login estiver errado, ou o usuário estiver tentando acesso à uma página
+						* através da sua url, sempre será redirecionado para a pg de login
+						*/
+					((HttpServletResponse response)).sendRedirect("login.jsp");
+			}	
+}
+
+//Classe UsuarioDAO
+public Usuario autenticacao(Usuario usuario){ //Instancia o usuario
+	Usuario usuRetorno = null;
+	String sql = "select * from usuario where email = ? and senha = ?";
+	
+	try{
+		PreparedStatement preparador = con.prepareStatement(sql);
+		preparador.setString(1, usuario.getEmail());
+		preparador.setString(2, usuario.getSenha());
+		
+		ResultSet resultado = preparador.executeQuery();
+		
+		if(resultado.netx()){
+			usuRetorno = new Usuario();
+			usuRetorno.setId(resultado.getInt("id"));
+			usuRetorno.setNome(resultado.getString"id"));
+			usuRetorno.setEmail(resultado.getInt("email"));
+			usuRetorno.setSenha(resultado.getInt("senha"));
+		}	
+		System.out.println("Encontrado com sucesso!");
+	} catch (SQLException e){
+		System.out.println("Erro de SQL: " + e.getMessagem());
+	}
+	return usuRetorno;
+}
+
+//JSP login.jsp
+<body>
+
+<h1>Página de login</h1>
+	<form action = "autenticador" method = "post"> 
+
+		<label>E-mail:</label>
+		<input type = "text" name = "email"><br>
+		<label>Senha:</label>
+		<input type = "password" name = "senha"><br>
+		<input type = "submit" value = "Logar">
+
+	</form>
+
+</body>
+
+//JSP erroLogin.jsp
+<body>
+
+<h1>Erro de Login!</h1>
+<a href = "login.jsp">Tente novamente</a>
+
+</body>
+
+//JSP - menu
+<body>
+	<a href = "home.jsp">Inicio</a><br>
+	<a href = "UsuarioControllador?acao=cad">Cadastro</a>
+	<a href = "UsuarioControllador?acao=lis">Lista de Usuarios</a>
+	<a href = "autenticador">sair</a>
+	
+</body>
+
+//JSP - home | Dentro do login | Mostrando o nome da pessoa que está na sessão
+<body>
+<jsp:include page = "cabecalho.jsp"></jsp:include>
+<h1>Curso Java Web!</h1>
+
+<%
+Usuario usuAutenticado = (Usuario)session.getAttribute("usuAutenticado");
+out.print("Seja bem vindo, " + usuAutenticado.getNome());
+%>
+
+</body> 
