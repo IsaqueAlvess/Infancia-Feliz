@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap');
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.margem{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.titulos-menu{
+    color: white;
+    text-align: left;
+}
+
+.titulo{
+    text-align: center;
+    background-color: rgb(172, 172, 172);
+}
+
+h1#h1-titulo{
+    font-family: 'Hachi Maru Pop', cursive; 
+    font-size: 40pt;
+}
+
+.missao{
+    background-color: rgb(214, 214, 214); 
+    margin-top: -8px;
+}
+
+
+h2, h3{
+    text-align: center;
+}
+
+.p-missao{
+    margin-left: 20px;
+    font-size: 17pt;
+}
+
+.video-demonstracao{
+    background-color: rgb(172, 172, 172);
+    margin-bottom: -31px;
+    padding-bottom: 31px;
+}
+
+footer#rodape{
+    text-align: center;
+    background-color: black;
+    color: white;
+    margin-top: 31px;
+    padding-top: 3px;
+    padding-bottom: 1px;
+}
