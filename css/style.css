@@ -4,11 +4,7 @@
 
 body{
     font-family:Arial, Helvetica, sans-serif;
-}
-
-.margem{
-    padding-top: 30px;
-    padding-bottom: 30px;
+    background-color: rgb(172, 172, 172);
 }
 
 .titulos-menu{
@@ -18,22 +14,14 @@ body{
 
 .titulo{
     text-align: center;
-    background-color: rgb(172, 172, 172);
-}
-
-h1#h1-titulo{
-    font-family: 'Hachi Maru Pop', cursive; 
-    font-size: 40pt;
 }
 
 .missao{
     background-color: rgb(214, 214, 214); 
     margin-top: -8px;
-}
-
-
-h2, h3{
-    text-align: center;
+    margin: 20px 600px 3px 22px;
+    border-radius: 60px;
+    width: 650px;
 }
 
 .p-missao{
@@ -41,17 +29,33 @@ h2, h3{
     font-size: 17pt;
 }
 
-.video-demonstracao{
-    background-color: rgb(172, 172, 172);
-    margin-bottom: -31px;
-    padding-bottom: 31px;
+.margem{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+h1#h1-titulo{
+    font-family: 'Hachi Maru Pop', cursive; 
+    font-size: 40pt;
+}
+
+h2, h3{
+    text-align: center;
+}
+
+.video{
+    background-color: rgb(214, 214, 214); 
+    margin: -361px 180px 3px 690px;
+    padding-bottom: 174px;
+    border-radius: 60px;
+    width: 650px;
 }
 
 footer#rodape{
     text-align: center;
     background-color: black;
     color: white;
-    margin-top: 31px;
+    margin-top: 47px;
     padding-top: 3px;
     padding-bottom: 1px;
 }
