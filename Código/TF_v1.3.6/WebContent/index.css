@@ -1,0 +1,36 @@
+@charset "ISO-8859-1";
+div.scrollmenu {
+  background-color: black;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  position: relative;
+  padding: 10px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: black;
+}
+
+table{
+	background-size: 100% auto;
+	margin: auto;
+}
+td{
+	width: 250px;
+	text-align: left;
+	font-size: 17px;
+	font-family: verdana;
+}
+tr{
+	height: 35px;
+}
+
+
